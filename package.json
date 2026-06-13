@@ -1,0 +1,13 @@
+{
+  "name": "techtroop-trie-autocomplete",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Functional Trie Autocomplete CLI",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
