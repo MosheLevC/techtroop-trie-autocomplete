@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert';
-import { createTrieNode } from './trie.js';
+import { createTrieNode, addWord } from './trie.js';
 
 test('createTrieNode default values', () => {
   const node = createTrieNode();
@@ -19,4 +19,25 @@ test('createTrieNode returns a new object every time', () => {
   const node1 = createTrieNode('a');
   const node2 = createTrieNode('a');
   assert.notStrictEqual(node1, node2);
+});
+
+test('addWord adds a single word', () => {
+  const root = createTrieNode();
+  addWord(root, 'a');
+  assert.strictEqual(root.children['a'].value, 'a');
+  assert.strictEqual(root.children['a'].endOfWord, true);
+});
+
+test('addWord handles empty string', () => {
+  const root = createTrieNode();
+  addWord(root, '');
+  assert.strictEqual(root.endOfWord, true);
+});
+
+test('addWord handles overlapping prefixes', () => {
+  const root = createTrieNode();
+  addWord(root, 'cat');
+  addWord(root, 'can');
+  assert.strictEqual(root.children['c'].children['a'].children['t'].endOfWord, true);
+  assert.strictEqual(root.children['c'].children['a'].children['n'].endOfWord, true);
 });
