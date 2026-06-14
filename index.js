@@ -1,6 +1,6 @@
-import { createTrieNode } from './trie.js';
-import { displayWelcome } from './view.js';
-import { startApp } from './controller.js';
+import { createTrieNode } from "./trie.js";
+import { displayWelcome } from "./view.js";
+import { startApp } from "./controller.js";
 
 const root = createTrieNode();
 
