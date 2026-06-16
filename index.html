@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>responsive text</title>
+    <style>
+      body {
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+        background: linear-gradient(135deg, #697fe9 0%, #764da5 100%);
+      }
+      section {
+        width: 250px;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        margin: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 4px 0;
+      }
+      .row {
+        display: flex;
+      }
+      .stats {
+        display: flex;
+        flex-direction: column;
+        background-color: #f8fafc;
+      }
+      @media (min-width: 600px) {
+        section {
+          width: 400px;
+        }
+      }
+      @media (min-width: 900px) {
+        section {
+          width: 700px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <div class="row">
+        <input class="add-input" type="text" placeholder="Enter a word to add to dictionary" />
+        <button class="add-button">Add Word</button>
+      </div>
+      <div class="row">
+        <input class="autocomplete" type="text" placeholder="Start typing to see suggestions..." />
+      </div>
+      <div class="stats row">
+        <span>0</span>
+        <span>Words in dictionary</span>
+      </div>
+    </section>
+  </body>
+</html>
