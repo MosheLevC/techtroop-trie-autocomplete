@@ -58,6 +58,14 @@ export const predictWords = (root, prefix) => {
   return results.sort((a, b) => b.frequency - a.frequency);
 };
 
+export const countWords = (node) => {
+  let count = node.endOfWord ? 1 : 0;
+  for (const char in node.children) {
+    count += countWords(node.children[char]);
+  }
+  return count;
+};
+
 export const useWord = (node, word) => {
   if (word.length === 0) {
     if (node.endOfWord) {
