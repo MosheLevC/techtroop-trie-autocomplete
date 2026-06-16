@@ -1,56 +1,38 @@
-import readline from "node:readline";
-import { addWord, findWord, predictWords, useWord } from "./trie.js";
-import { displayHelp, displaySuccess, displayError, displaySuggestions } from "./view.js";
-
-export const handleCommand = (root, input, rl) => {
-  const [command, ...args] = input.trim().split(/\s+/);
-  const arg = args.join(" ");
-
-  switch (command.toLowerCase()) {
-    case "add":
-      if (!arg) return displayError("Please provide a word to add");
-      addWord(root, arg);
-      displaySuccess(`Added word: "${arg}"`);
-      break;
-    case "find":
-      if (!arg) return displayError("Please provide a word to find");
-      findWord(root, arg) ? displaySuccess(`Word "${arg}" exists`) : displayError(`Word "${arg}" not found`);
-      break;
-    case "complete":
-      if (!arg) return displayError("Please provide a prefix");
-      const suggestions = predictWords(root, arg);
-      displaySuggestions(arg, suggestions);
-      break;
-    case "use":
-      if (!arg) return displayError("Please provide a word to use");
-      useWord(root, arg);
-      displaySuccess(`Incremented frequency for: "${arg}"`);
-      break;
-    case "help":
-      displayHelp();
-      break;
-    case "exit":
-      rl.close();
-      return;
-    default:
-      displayError('Unknown command. Type "help" for a list of commands.');
-  }
-};
+import { addWord, predictWords, useWord, countWords } from "./trie.js";
+import * as View from "./view.js";
 
 export const startApp = (root) => {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-    prompt: "> ",
+  const addInput = document.getElementById("add-input");
+  const addButton = document.getElementById("add-button");
+  const autoInput = document.getElementById("autocomplete-input");
+
+  const updateUI = () => {
+    View.updateWordCount(countWords(root));
+  };
+
+  addButton.onclick = () => {
+    const word = addInput.value.trim();
+    if (!word) return View.displayError("Cannot add empty word");
+    
+    addWord(root, word);
+    View.displaySuccess(`Added '${word}' to dictionary`);
+    View.clearInput("add-input");
+    updateUI();
+  };
+
+  autoInput.oninput = (e) => {
+    const prefix = e.target.value.trim();
+    const suggestions = predictWords(root, prefix);
+    View.displaySuggestions(prefix, suggestions);
+  };
+
+  document.addEventListener("suggestionSelected", (e) => {
+    const word = e.detail;
+    useWord(root, word);
+    View.setInputValue("autocomplete-input", word);
+    View.displaySuggestions("", []);
+    updateUI();
   });
 
-  rl.prompt();
-
-  rl.on("line", (line) => {
-    handleCommand(root, line, rl);
-    if (!rl.closed) rl.prompt();
-  }).on("close", () => {
-    console.log("\nGoodbye!");
-    process.exit(0);
-  });
+  updateUI();
 };
