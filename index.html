@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>responsive text</title>
     <style>
+      * {
+        font-family: system-ui, Arial, Helvetica, sans-serif;
+      }
+      p {
+        margin: 0;
+      }
       body {
         height: 100vh;
         margin: 0;
@@ -14,6 +20,12 @@
         text-align: center;
         background: linear-gradient(135deg, #697fe9 0%, #764da5 100%);
       }
+      section,
+      input,
+      .add-button,
+      .stats {
+        border-radius: 5px;
+      }
       section {
         width: 250px;
         height: fit-content;
@@ -22,16 +34,47 @@
         padding: 20px;
         margin: 20px;
         background-color: #fff;
-        border-radius: 10px;
         box-shadow: 0 0 4px 0;
       }
-      .row {
+      .add-word-row {
         display: flex;
+        height: 100px;
+        gap: 10px;
+      }
+      .autocomplete-row {
+        display: flex;
+        height: 35px;
+      }
+      input {
+        border: 2px #ecf0f6 solid;
+      }
+      .add-input {
+        flex-grow: 4;
+        height: 35px;
+        box-sizing: border-box;
+      }
+      .add-button {
+        flex-grow: 1;
+        height: 35px;
+        box-sizing: border-box;
+        font-weight: bold;
+        color: #f1f3fd;
+        background-color: #667eea;
+        border: none;
+      }
+      .autocomplete {
+        flex-grow: 1;
+        box-sizing: border-box;
       }
       .stats {
         display: flex;
         flex-direction: column;
         background-color: #f8fafc;
+      }
+      .word-count {
+        font-size: x-large;
+        font-weight: bold;
+        color: #667eea;
       }
       @media (min-width: 600px) {
         section {
@@ -47,16 +90,16 @@
   </head>
   <body>
     <section>
-      <div class="row">
+      <div class="add-word-row">
         <input class="add-input" type="text" placeholder="Enter a word to add to dictionary" />
         <button class="add-button">Add Word</button>
       </div>
-      <div class="row">
+      <div class="autocomplete-row">
         <input class="autocomplete" type="text" placeholder="Start typing to see suggestions..." />
       </div>
-      <div class="stats row">
-        <span>0</span>
-        <span>Words in dictionary</span>
+      <div class="stats-row">
+        <p class="word-count">0</p>
+        <p>Words in dictionary</p>
       </div>
     </section>
   </body>
